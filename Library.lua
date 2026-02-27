@@ -26,6 +26,40 @@ local function CreateObj(Class, Parametrs)
     return Obj
 end
 
+local function MakeDraggable(frame, dragHandle)
+    local dragging = false
+    local dragStart = nil
+    local startPos = nil
+
+    local handle = dragHandle or frame
+    handle = typeof(handle) == "table" and handle[1] or handle
+
+    local function update(input)
+        local delta = input.Position - dragStart
+        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+                                  startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+
+    handle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    Input.InputChanged:Connect(function(input)
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            update(input)
+        end
+    end)
+end
+
 function Library:CreateWindow(Parametrs)
     if not Parametrs then return end
     if typeof(Parametrs["Name"]) ~= "string" then return end
@@ -92,6 +126,8 @@ function Library:CreateWindow(Parametrs)
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })
+
+    MakeDraggable(WindowFrame,TitleFrame)
 end
 
 return Library

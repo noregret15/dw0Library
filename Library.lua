@@ -111,173 +111,23 @@ function Library:CreateWindow(Parametrs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
-    -- Создание контейнера для табов под TitleFrame
-    local TabsContainer = CreateObj("Frame", {
+    local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, 0, 0, 30),
-        Position = UDim2.new(0, 0, 0, 40),
-        BackgroundColor3 = Library.Theme.BackgroundOutline1,
-        BorderSizePixel = 0,
-        ZIndex = 2
-    })
-
-    -- Внутренняя рамка для контейнера табов
-    local TabsInner = CreateObj("Frame", {
-        Parent = TabsContainer,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
+        Size = UDim2.new(1, -2, 1, -42),
+        Position = UDim2.new(0, 1, 0, 41),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
-    -- Внутренняя часть контейнера
-    local TabsInner2 = CreateObj("Frame", {
-        Parent = TabsInner,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
-        BackgroundColor3 = Library.Theme.Background,
-        BorderSizePixel = 0
-    })
-
-    -- Контейнер для кнопок табов (будет заполняться слева направо)
-    local TabsButtonsContainer = CreateObj("Frame", {
-        Parent = TabsInner2,
-        Size = UDim2.new(1, 0, 1, 0),
-        BackgroundTransparency = 1
-    })
-
-    -- UIListLayout для автоматического расположения табов
-    local TabsLayout = CreateObj("UIListLayout", {
-        Parent = TabsButtonsContainer,
-        FillDirection = Enum.FillDirection.Horizontal,
-        HorizontalAlignment = Enum.HorizontalAlignment.Left,
-        VerticalAlignment = Enum.VerticalAlignment.Center,
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 2)
-    })
-
-    -- Контейнер для содержимого табов
-    local TabContentContainer = CreateObj("Frame", {
-        Parent = WindowFrame,
-        Size = UDim2.new(1, -2, 1, -74), -- 40 (Title) + 30 (Tabs) + 2 (padding) = 72
-        Position = UDim2.new(0, 1, 0, 71),
-        BackgroundColor3 = Library.Theme.BackgroundOutline2,
-        BorderSizePixel = 0,
-        Visible = true,
-        ZIndex = 1
-    })
-
-    local TabContentInner = CreateObj("Frame", {
-        Parent = TabContentContainer,
+    local WindowInner = CreateObj("Frame", {
+        Parent = WindowOutline,
         Size = UDim2.new(1, -2, 1, -2),
         Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })
 
-    local TabContentInner2 = CreateObj("Frame", {
-        Parent = TabContentInner,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
-        BackgroundColor3 = Library.Theme.Background,
-        BorderSizePixel = 0
-    })
-
-    MakeDraggable(WindowFrame, TitleFrame)
-
-    -- Система управления табами
-    local Window = {}
-    Window.Tabs = {}
-    Window.CurrentTab = nil
-    Window.TabContent = TabContentInner2
-    Window.TabsContainer = TabsButtonsContainer
-
-    function Window:CreateTab(name)
-        if not name then return end
-        
-        -- Создание кнопки таба
-        local TabButton = CreateObj("TextButton", {
-            Parent = TabsButtonsContainer,
-            Size = UDim2.new(0, 80, 1, -4),
-            Position = UDim2.new(0, 2, 0, 2),
-            BackgroundColor3 = Library.Theme.BackgroundOutline1,
-            Text = name,
-            TextColor3 = Color3.new(1, 1, 1),
-            TextScaled = false,
-            TextSize = 13,
-            Font = Enum.Font.Code,
-            AutoButtonColor = false,
-            BorderSizePixel = 0,
-            LayoutOrder = #Window.Tabs
-        })
-
-        -- Внутренняя рамка кнопки
-        local TabButtonInner = CreateObj("Frame", {
-            Parent = TabButton,
-            Size = UDim2.new(1, -2, 1, -2),
-            Position = UDim2.new(0, 1, 0, 1),
-            BackgroundColor3 = Library.Theme.BackgroundOutline2,
-            BorderSizePixel = 0
-        })
-
-        local TabButtonInner2 = CreateObj("Frame", {
-            Parent = TabButtonInner,
-            Size = UDim2.new(1, -2, 1, -2),
-            Position = UDim2.new(0, 1, 0, 1),
-            BackgroundColor3 = Library.Theme.Background,
-            BorderSizePixel = 0
-        })
-
-        -- Контейнер для содержимого таба
-        local TabContainer = CreateObj("Frame", {
-            Parent = TabContentInner2,
-            Size = UDim2.new(1, -10, 1, -10),
-            Position = UDim2.new(0, 5, 0, 5),
-            BackgroundTransparency = 1,
-            Visible = false
-        })
-
-        local Tab = {}
-        Tab.Button = TabButton
-        Tab.Container = TabContainer
-        Tab.Name = name
-
-        -- Функция выбора таба
-        function Tab:Select()
-            if Window.CurrentTab then
-                Window.CurrentTab.Container.Visible = false
-            end
-            
-            TabContainer.Visible = true
-            Window.CurrentTab = Tab
-            
-            -- Визуальное выделение выбранного таба
-            for _, t in pairs(Window.Tabs) do
-                t.Button.BackgroundColor3 = Library.Theme.BackgroundOutline1
-                t.Button.TextColor3 = Color3.new(1, 1, 1)
-            end
-            TabButton.BackgroundColor3 = Library.Theme.BackgroundOutline2
-            TabButton.TextColor3 = Color3.new(1, 1, 0)
-        end
-
-        -- Обработчик нажатия
-        TabButton.MouseButton1Click:Connect(function()
-            Tab:Select()
-        end)
-
-        table.insert(Window.Tabs, Tab)
-
-        -- Если это первый таб, выбираем его автоматически
-        if #Window.Tabs == 1 then
-            Tab:Select()
-        end
-
-        return Tab
-    end
-
-    MakeDraggable(WindowFrame, TitleFrame)
-
-    return Window
+    MakeDraggable(WindowFrame,TitleFrame)
 end
 
 return Library

@@ -37,7 +37,7 @@ local function MakeDraggable(frame, dragHandle)
     local function update(input)
         local delta = input.Position - dragStart
         frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-                                  startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+                                    startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 
     handle.InputBegan:Connect(function(input)
@@ -111,10 +111,19 @@ function Library:CreateWindow(Parametrs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
+    local TabHighlight = CreateObj("Frame", {
+        Parent = WindowFrame,
+        Size = UDim2.new(0, 100, 0, 3),
+        Position = UDim2.new(0, 0, 0, 40),
+        BackgroundColor3 = Library.Theme.BackgroundOutline2,
+        BorderSizePixel = 0,
+        ZIndex = 10
+    })
+
     local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -2, 1, -42),
-        Position = UDim2.new(0, 1, 0, 41),
+        Size = UDim2.new(1, -2, 1, -45),
+        Position = UDim2.new(0, 1, 0, 44),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })

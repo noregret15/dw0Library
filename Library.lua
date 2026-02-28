@@ -135,7 +135,7 @@ function Library:CreateWindow(Parametrs)
 end
 
 local function FadeIn(ScreenGui)
-    for _, obj in pairs(ScreenGui:GetChildren()) do
+    for _, obj in pairs(ScreenGui:GetDescendants()) do  -- Было GetChildren()
         if obj:IsA("GuiObject") then
             obj.BackgroundTransparency = 1
             obj.Visible = true
@@ -152,7 +152,7 @@ local function FadeIn(ScreenGui)
 end
 
 local function FadeOut(ScreenGui, callback)
-    for _, obj in pairs(ScreenGui:GetChildren()) do
+    for _, obj in pairs(ScreenGui:GetDescendants()) do  -- Было GetChildren()
         if obj:IsA("GuiObject") then
             Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
                 BackgroundTransparency = 1
@@ -169,11 +169,7 @@ local function FadeOut(ScreenGui, callback)
 end
 
 function Library:Unload()
-    pcall(function()
-        FadeOut(ScreenGui__, function()
-            ScreenGui__:Destroy()
-        end)
-    end)
+    pcall(function() ScreenGui__:Destroy() end)
 end
 
 function Library:SetKeybind(Key)

@@ -64,6 +64,8 @@ local function MakeDraggable(frame, dragHandle)
     end)
 end
 
+local OriginalProps = {}
+
 function Library:CreateWindow(Parametrs)
     if not Parametrs then return end
     if typeof(Parametrs["Name"]) ~= "string" then return end
@@ -81,7 +83,7 @@ function Library:CreateWindow(Parametrs)
 
     local TitleFrame = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, 0, 0, 25),
+        Size = UDim2.new(1, 0, 0, 40),
         Position = UDim2.new(0, 0, 0, 0),
         BackgroundTransparency = 1
     })
@@ -131,6 +133,16 @@ function Library:CreateWindow(Parametrs)
         BorderSizePixel = 0
     })
 
+    for _, obj in pairs(WindowFrame:GetDescendants()) do
+        if obj:IsA("GuiObject") then
+            OriginalProps[obj] = obj.BackgroundTransparency
+            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                OriginalProps[obj] = OriginalProps[obj] or {}
+                OriginalProps[obj].Text = obj.TextTransparency
+            end
+        end
+    end
+
     MakeDraggable(WindowFrame,TitleFrame)
 end
 
@@ -139,16 +151,20 @@ local function FadeIn(ScreenGui)
     for _, obj in pairs(ScreenGui:GetDescendants()) do
         if obj:IsA("GuiObject") then
             obj.Visible = true
+
             if obj.BackgroundTransparency ~= 1 then
+                local original = OriginalProps[obj] or 0
                 obj.BackgroundTransparency = 1
                 Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-                    BackgroundTransparency = 0
+                    BackgroundTransparency = original
                 }):Play()
             end
+
             if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                local originalText = OriginalProps[obj] and OriginalProps[obj].Text or 0
                 obj.TextTransparency = 1
                 Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-                    TextTransparency = 0
+                    TextTransparency = originalText
                 }):Play()
             end
         end
@@ -159,14 +175,13 @@ local function FadeOut(ScreenGui, callback)
     for _, obj in pairs(ScreenGui:GetDescendants()) do
         if obj:IsA("GuiObject") then
             if obj.BackgroundTransparency ~= 1 then
-                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
-                    BackgroundTransparency = 1
-                }):Play()
+                obj.BackgroundTransparency = 1
+                OriginalProps[obj] = obj.BackgroundTransparency  -- Сохраняем текущее
             end
+
             if obj:IsA("TextLabel") or obj:IsA("TextButton") then
-                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
-                    TextTransparency = 1
-                }):Play()
+                obj.TextTransparency = 1
+                if not OriginalProps[obj] then OriginalProps[obj] = {Text = 0} end
             end
         end
     end

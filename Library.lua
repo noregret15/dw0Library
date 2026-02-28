@@ -117,7 +117,6 @@ function Library:CreateWindow(Parametrs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
-    -- Tabs Frame (слева)
     local TabsFrame = CreateObj("Frame", {
         Parent = WindowFrame,
         Size = UDim2.new(0, 120, 1, -42),
@@ -141,10 +140,9 @@ function Library:CreateWindow(Parametrs)
         BorderSizePixel = 0
     })
 
-    -- Основной контент (справа от Tabs)
     local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -124, 1, -42), -- Уменьшен на ширину TabsFrame + отступ
+        Size = UDim2.new(1, -124, 1, -42),
         Position = UDim2.new(0, 122, 0, 41),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0

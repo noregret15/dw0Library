@@ -138,7 +138,7 @@ function Library:CreateWindow(Parametrs)
             OriginalProps[obj] = obj.BackgroundTransparency
             if obj:IsA("TextLabel") or obj:IsA("TextButton") then
                 OriginalProps[obj] = OriginalProps[obj] or {}
-                OriginalProps[obj].Text = obj.TextTransparency
+                OriginalProps[obj].TextTransparency = obj.TextTransparency
             end
         end
     end
@@ -176,7 +176,7 @@ local function FadeOut(ScreenGui, callback)
         if obj:IsA("GuiObject") then
             if obj.BackgroundTransparency ~= 1 then
                 obj.BackgroundTransparency = 1
-                OriginalProps[obj] = obj.BackgroundTransparency  -- Сохраняем текущее
+                OriginalProps[obj] = obj.BackgroundTransparency
             end
 
             if obj:IsA("TextLabel") or obj:IsA("TextButton") then

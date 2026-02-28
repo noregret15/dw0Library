@@ -88,18 +88,18 @@ function Library:CreateWindow(Parametrs)
         BackgroundTransparency = 1
     })
 
-    local TitleOutline = CreateObj("Frame", {
-        Parent = TitleFrame,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
+    local WindowOutline = CreateObj("Frame", {
+        Parent = WindowFrame,
+        Size = UDim2.new(1, -120, 1, -42),
+        Position = UDim2.new(0, 120, 0, 41),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
-    local TitleInner = CreateObj("Frame", {
-        Parent = TitleOutline,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
+    local WindowInner = CreateObj("Frame", {
+        Parent = WindowOutline,
+        Size = UDim2.new(1, 0, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })

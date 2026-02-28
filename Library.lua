@@ -81,7 +81,7 @@ function Library:CreateWindow(Parametrs)
 
     local TitleFrame = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, 0, 0, 40),
+        Size = UDim2.new(1, 0, 0, 25),
         Position = UDim2.new(0, 0, 0, 0),
         BackgroundTransparency = 1
     })

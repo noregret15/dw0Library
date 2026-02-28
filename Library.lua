@@ -1,4 +1,4 @@
-там tabsFrame и windowFrame не ровно немного в ширину: local Input = game:GetService("UserInputService")
+local Input = game:GetService("UserInputService")
 local Tween = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
 

@@ -133,61 +133,7 @@ function Library:CreateWindow(Parametrs)
         BorderSizePixel = 0
     })
 
-    for _, obj in pairs(WindowFrame:GetDescendants()) do
-        if obj:IsA("GuiObject") then
-            OriginalProps[obj] = obj.BackgroundTransparency
-            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
-                OriginalProps[obj] = OriginalProps[obj] or {}
-                OriginalProps[obj].TextTransparency = obj.TextTransparency
-            end
-        end
-    end
-
     MakeDraggable(WindowFrame,TitleFrame)
-end
-
-local function FadeIn(ScreenGui)
-    ScreenGui.Enabled = true
-    for _, obj in pairs(ScreenGui:GetDescendants()) do
-        if obj:IsA("GuiObject") then
-            obj.Visible = true
-
-            if obj.BackgroundTransparency ~= 1 then
-                local original = OriginalProps[obj] or 0
-                obj.BackgroundTransparency = 1
-                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-                    BackgroundTransparency = original
-                }):Play()
-            end
-
-            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
-                local originalText = OriginalProps[obj] and OriginalProps[obj].Text or 0
-                obj.TextTransparency = 1
-                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-                    TextTransparency = originalText
-                }):Play()
-            end
-        end
-    end
-end
-
-local function FadeOut(ScreenGui, callback)
-    for _, obj in pairs(ScreenGui:GetDescendants()) do
-        if obj:IsA("GuiObject") then
-            if obj.BackgroundTransparency ~= 1 then
-                obj.BackgroundTransparency = 1
-                OriginalProps[obj] = obj.BackgroundTransparency
-            end
-
-            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
-                obj.TextTransparency = 1
-                if not OriginalProps[obj] then OriginalProps[obj] = {Text = 0} end
-            end
-        end
-    end
-    task.wait(0.3)
-    ScreenGui.Enabled = false
-    if callback then callback() end
 end
 
 function Library:Unload()
@@ -204,9 +150,9 @@ Input.InputBegan:Connect(function(input, gameProcessed)
     if input.KeyCode == Library.Utils.Key then
         Library.Utils.Showed = not Library.Utils.Showed
         if Library.Utils.Showed then
-            FadeIn(ScreenGui__)
+            --
         else
-            FadeOut(ScreenGui__)
+            --
         end
     end
 end)

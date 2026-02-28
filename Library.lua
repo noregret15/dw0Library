@@ -1,4 +1,5 @@
 local Input = game:GetService("UserInputService")
+local Tween = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
 
 local Library = {
@@ -7,7 +8,10 @@ local Library = {
         BackgroundOutline2 = Color3.fromRGB(50, 50, 180),
         Background = Color3.fromRGB(30, 30, 30)
     },
-    Window = nil
+    Utils = {
+        Showed = true,
+        Key = nil
+    }
 }
 
 getfenv().Objects = {}
@@ -128,14 +132,65 @@ function Library:CreateWindow(Parametrs)
     })
 
     MakeDraggable(WindowFrame,TitleFrame)
-    Library.Window = WindowFrame
+end
 
-    --
-
-    function Library.Window:AddTab(Parametrs2)
-        if not Parametrs2["Name"] then return end
-        warn("Tab Added")
+local function FadeIn(ScreenGui)
+    for _, obj in pairs(ScreenGui:GetChildren()) do
+        if obj:IsA("GuiObject") then
+            obj.BackgroundTransparency = 1
+            obj.Visible = true
+            Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+                BackgroundTransparency = 0
+            }):Play()
+            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+                    TextTransparency = 0
+                }):Play()
+            end
+        end
     end
 end
+
+local function FadeOut(ScreenGui, callback)
+    for _, obj in pairs(ScreenGui:GetChildren()) do
+        if obj:IsA("GuiObject") then
+            Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
+                BackgroundTransparency = 1
+            }):Play()
+            if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
+                    TextTransparency = 1
+                }):Play()
+            end
+        end
+    end
+    task.wait(0.3)
+    if callback then callback() end
+end
+
+function Library:Unload()
+    pcall(function()
+        FadeOut(ScreenGui__, function()
+            ScreenGui__:Destroy()
+        end)
+    end)
+end
+
+function Library:SetKeybind(Key)
+    Library.Utils.Key = typeof(Key) == "EnumItem" and Key or Enum.KeyCode[Key]
+end
+
+Input.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed or Input:GetFocusedTextBox() then return end
+
+    if input.KeyCode == Library.Utils.Key then
+        Library.Utils.Showed = not Library.Utils.Showed
+        if Library.Utils.Showed then
+            FadeIn(ScreenGui__)
+        else
+            FadeOut(ScreenGui__)
+        end
+    end
+end)
 
 return Library

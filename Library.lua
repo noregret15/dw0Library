@@ -64,6 +64,8 @@ local function MakeDraggable(frame, dragHandle)
     end)
 end
 
+local OriginalProps = {}
+
 function Library:CreateWindow(Parametrs)
     if not Parametrs then return end
     if typeof(Parametrs["Name"]) ~= "string" then return end
@@ -115,32 +117,34 @@ function Library:CreateWindow(Parametrs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
-    local SidebarFrame = CreateObj("Frame", {
+    -- Tabs Frame (слева)
+    local TabsFrame = CreateObj("Frame", {
         Parent = WindowFrame,
         Size = UDim2.new(0, 120, 1, -42),
         Position = UDim2.new(0, 0, 0, 41),
         BackgroundTransparency = 1
     })
 
-    local SidebarOutline = CreateObj("Frame", {
-        Parent = SidebarFrame,
+    local TabsOutline = CreateObj("Frame", {
+        Parent = TabsFrame,
         Size = UDim2.new(1, -2, 1, -2),
         Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
-    local SidebarInner = CreateObj("Frame", {
-        Parent = SidebarOutline,
+    local TabsInner = CreateObj("Frame", {
+        Parent = TabsOutline,
         Size = UDim2.new(1, -2, 1, -2),
         Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })
 
+    -- Основной контент (справа от Tabs)
     local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -124, 1, -44),
+        Size = UDim2.new(1, -124, 1, -42), -- Уменьшен на ширину TabsFrame + отступ
         Position = UDim2.new(0, 122, 0, 41),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0

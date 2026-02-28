@@ -64,8 +64,6 @@ local function MakeDraggable(frame, dragHandle)
     end)
 end
 
-local OriginalProps = {}
-
 function Library:CreateWindow(Parametrs)
     if not Parametrs then return end
     if typeof(Parametrs["Name"]) ~= "string" then return end
@@ -117,10 +115,33 @@ function Library:CreateWindow(Parametrs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
+    local TabsFrame = CreateObj("Frame", {
+        Parent = WindowFrame,
+        Size = UDim2.new(1, -2, 0, 35),
+        Position = UDim2.new(0, 1, 0, 41),
+        BackgroundTransparency = 1
+    })
+
+    local TabsOutline = CreateObj("Frame", {
+        Parent = TabsFrame,
+        Size = UDim2.new(1, -2, 1, -2),
+        Position = UDim2.new(0, 1, 0, 1),
+        BackgroundColor3 = Library.Theme.BackgroundOutline2,
+        BorderSizePixel = 0
+    })
+
+    local TabsInner = CreateObj("Frame", {
+        Parent = TabsOutline,
+        Size = UDim2.new(1, -2, 1, -2),
+        Position = UDim2.new(0, 1, 0, 1),
+        BackgroundColor3 = Library.Theme.BackgroundOutline1,
+        BorderSizePixel = 0
+    })
+
     local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -2, 1, -42),
-        Position = UDim2.new(0, 1, 0, 41),
+        Size = UDim2.new(1, -2, 1, -82),
+        Position = UDim2.new(0, 1, 0, 81),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })

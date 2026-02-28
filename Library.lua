@@ -6,11 +6,11 @@ local Library = {
         BackgroundOutline1 = Color3.fromRGB(15, 15, 15),
         BackgroundOutline2 = Color3.fromRGB(50, 50, 180),
         Background = Color3.fromRGB(30, 30, 30)
-    }
+    },
+    Window = nil
 }
 
 getfenv().Objects = {}
-getfenv().Options = {}
 
 local ScreenGui__ = Instance.new("ScreenGui")
 ScreenGui__.Parent = CoreGui
@@ -128,6 +128,14 @@ function Library:CreateWindow(Parametrs)
     })
 
     MakeDraggable(WindowFrame,TitleFrame)
+    Library.Window = WindowFrame
+
+    --
+
+    function Library.Window:AddTab(Parametrs2)
+        if not Parametrs2["Name"] then return end
+        warn("Tab Added")
+    end
 end
 
 return Library

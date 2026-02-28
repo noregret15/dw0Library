@@ -1,4 +1,4 @@
-local Input = game:GetService("UserInputService")
+там tabsFrame и windowFrame не ровно немного в ширину: local Input = game:GetService("UserInputService")
 local Tween = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
 
@@ -88,18 +88,18 @@ function Library:CreateWindow(Parametrs)
         BackgroundTransparency = 1
     })
 
-    local WindowOutline = CreateObj("Frame", {
-        Parent = WindowFrame,
-        Size = UDim2.new(1, -120, 1, -42),
-        Position = UDim2.new(0, 120, 0, 41),
+    local TitleOutline = CreateObj("Frame", {
+        Parent = TitleFrame,
+        Size = UDim2.new(1, -2, 1, -2),
+        Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
-    local WindowInner = CreateObj("Frame", {
-        Parent = WindowOutline,
-        Size = UDim2.new(1, 0, 1, 0),
-        Position = UDim2.new(0, 0, 0, 0),
+    local TitleInner = CreateObj("Frame", {
+        Parent = TitleOutline,
+        Size = UDim2.new(1, -2, 1, -2),
+        Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })
@@ -126,23 +126,23 @@ function Library:CreateWindow(Parametrs)
 
     local TabsOutline = CreateObj("Frame", {
         Parent = TabsFrame,
-        Size = UDim2.new(1, 0, 1, 0),
-        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(1, -2, 1, -2),
+        Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
     local TabsInner = CreateObj("Frame", {
         Parent = TabsOutline,
-        Size = UDim2.new(1, 0, 1, 0),
-        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(1, -2, 1, -2),
+        Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })
 
     local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -124, 1, -42),
+        Size = UDim2.new(1, -120, 1, -42),
         Position = UDim2.new(0, 122, 0, 41),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0

@@ -112,9 +112,9 @@ function Library:CreateWindow(Parametrs)
         Text = Parametrs.Name,
         TextColor3 = Color3.new(1, 1, 1),
         TextScaled = false,
-        TextSize = 14,
+        TextSize = 15,
         Font = Enum.Font.Code,
-        TextXAlignment = Enum.TextXAlignment.Left
+        TextXAlignment = Enum.TextXAlignment.Center
     })
 
     local TabsFrame = CreateObj("Frame", {

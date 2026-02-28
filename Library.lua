@@ -115,23 +115,23 @@ function Library:CreateWindow(Parametrs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
-    local TabsFrame = CreateObj("Frame", {
+    local SidebarFrame = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -2, 0, 35),
-        Position = UDim2.new(0, 1, 0, 41),
+        Size = UDim2.new(0, 120, 1, -42),
+        Position = UDim2.new(0, 0, 0, 41),
         BackgroundTransparency = 1
     })
 
-    local TabsOutline = CreateObj("Frame", {
-        Parent = TabsFrame,
+    local SidebarOutline = CreateObj("Frame", {
+        Parent = SidebarFrame,
         Size = UDim2.new(1, -2, 1, -2),
         Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
-    local TabsInner = CreateObj("Frame", {
-        Parent = TabsOutline,
+    local SidebarInner = CreateObj("Frame", {
+        Parent = SidebarOutline,
         Size = UDim2.new(1, -2, 1, -2),
         Position = UDim2.new(0, 1, 0, 1),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
@@ -140,8 +140,8 @@ function Library:CreateWindow(Parametrs)
 
     local WindowOutline = CreateObj("Frame", {
         Parent = WindowFrame,
-        Size = UDim2.new(1, -2, 1, -82),
-        Position = UDim2.new(0, 1, 0, 81),
+        Size = UDim2.new(1, -124, 1, -44),
+        Position = UDim2.new(0, 122, 0, 41),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })

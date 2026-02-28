@@ -135,14 +135,18 @@ function Library:CreateWindow(Parametrs)
 end
 
 local function FadeIn(ScreenGui)
-    for _, obj in pairs(ScreenGui:GetDescendants()) do  -- Было GetChildren()
+    ScreenGui.Enabled = true
+    for _, obj in pairs(ScreenGui:GetDescendants()) do
         if obj:IsA("GuiObject") then
-            obj.BackgroundTransparency = 1
             obj.Visible = true
-            Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-                BackgroundTransparency = 0
-            }):Play()
+            if obj.BackgroundTransparency ~= 1 then
+                obj.BackgroundTransparency = 1
+                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+                    BackgroundTransparency = 0
+                }):Play()
+            end
             if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                obj.TextTransparency = 1
                 Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
                     TextTransparency = 0
                 }):Play()
@@ -152,11 +156,13 @@ local function FadeIn(ScreenGui)
 end
 
 local function FadeOut(ScreenGui, callback)
-    for _, obj in pairs(ScreenGui:GetDescendants()) do  -- Было GetChildren()
+    for _, obj in pairs(ScreenGui:GetDescendants()) do
         if obj:IsA("GuiObject") then
-            Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
-                BackgroundTransparency = 1
-            }):Play()
+            if obj.BackgroundTransparency ~= 1 then
+                Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
+                    BackgroundTransparency = 1
+                }):Play()
+            end
             if obj:IsA("TextLabel") or obj:IsA("TextButton") then
                 Tween:Create(obj, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {
                     TextTransparency = 1
@@ -165,6 +171,7 @@ local function FadeOut(ScreenGui, callback)
         end
     end
     task.wait(0.3)
+    ScreenGui.Enabled = false
     if callback then callback() end
 end
 

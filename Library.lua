@@ -126,16 +126,16 @@ function Library:CreateWindow(Parametrs)
 
     local TabsOutline = CreateObj("Frame", {
         Parent = TabsFrame,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
+        Size = UDim2.new(1, 0, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
         BackgroundColor3 = Library.Theme.BackgroundOutline2,
         BorderSizePixel = 0
     })
 
     local TabsInner = CreateObj("Frame", {
         Parent = TabsOutline,
-        Size = UDim2.new(1, -2, 1, -2),
-        Position = UDim2.new(0, 1, 0, 1),
+        Size = UDim2.new(1, 0, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
         BackgroundColor3 = Library.Theme.BackgroundOutline1,
         BorderSizePixel = 0
     })
